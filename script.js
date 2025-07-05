@@ -12,6 +12,7 @@ form.addEventListener("submit", (e) => {
 
   //clear values
   input.value = "";
+  details.innerHTML = "";
 });
 
 async function showData(location) {
@@ -19,12 +20,41 @@ async function showData(location) {
     `https://api.openweathermap.org/data/2.5/weather?q=${location.value}&appid=25fc2096791de9258f2a8d6d53df7956&units=metric`
   );
   let data = await response.json();
-  console.log(data, data.name, data.main.temp);
+  console.log(data);
 
   let city = document.createElement("p");
   city.classList = "city";
   city.textContent = data.name;
 
+  let temperature = document.createElement("p");
+  temperature.classList = "temperature";
+  temperature.innerHTML = `${data.main.temp}<span>&#176</span>`;
+
+  let description = document.createElement("p");
+  description.classList = "description";
+  description.textContent = data.weather[0].description;
+
+  let div = document.createElement("div");
+  // image.classList = "icon";
+  // image.alt = "weather description";
+
+  if (data.weather[0].main === "Clear") {
+    div.innerHTML = `<ion-icon class="icon" name="sunny"></ion-icon>`;
+  } else if (data.weather[0].main === "Rain") {
+    div.innerHTML = `<ion-icon class="icon" name="rainy"></ion-icon>`;
+  } else if (data.weather[0].main === "Cloudy") {
+    div.innerHTML = `<ion-icon class="icon" name="cloudy"></ion-icon>`;
+  } else {
+    div.innerHTML = `<ion-icon class="icon" name="sunny"></ion-icon>`;
+  }
+  // let condition = data.weather[0].main;
+
+  // div.innerHTML = `<ion-icon class="icon" name="${condition}"></ion-icon>`;
+
   details.classList.remove("hidden");
   details.appendChild(city);
+  // details.appendChild(image);
+  details.appendChild(div);
+  details.appendChild(temperature);
+  details.appendChild(description);
 }
