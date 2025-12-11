@@ -37,24 +37,28 @@ async function showData(location) {
   let div = document.createElement("div");
   // image.classList = "icon";
   // image.alt = "weather description";
+  const iconCode = data.weather[0].icon;
 
   if (data.weather[0].main === "Clear") {
-    div.innerHTML = `<ion-icon class="icon" name="sunny"></ion-icon>`;
+    div.innerHTML = `<img class="icon" src="https://openweathermap.org/img/wn/${iconCode}@2x.png" />`;
   } else if (data.weather[0].main === "Rain") {
-    div.innerHTML = `<ion-icon class="icon" name="rainy"></ion-icon>`;
-  } else if (data.weather[0].main === "Cloudy") {
-    div.innerHTML = `<ion-icon class="icon" name="cloudy"></ion-icon>`;
+    div.innerHTML = `<img class="icon" src="https://openweathermap.org/img/wn/${iconCode}@2x.png" />`;
+  } else if (
+    data.weather[0].main === "Clouds" ||
+    data.weather[0].main === "Smoke"
+  ) {
+    div.innerHTML = `<img class="icon" src="https://openweathermap.org/img/wn/${iconCode}@2x.png" />`;
   } else {
-    div.innerHTML = `<ion-icon class="icon" name="sunny"></ion-icon>`;
+    div.innerHTML = `<img class="icon" src="https://openweathermap.org/img/wn/${iconCode}@2x.png" />`;
   }
   // let condition = data.weather[0].main;
 
   // div.innerHTML = `<ion-icon class="icon" name="${condition}"></ion-icon>`;
 
   details.classList.remove("hidden");
-  details.appendChild(city);
   // details.appendChild(image);
   details.appendChild(div);
   details.appendChild(temperature);
+  details.appendChild(city);
   details.appendChild(description);
 }
