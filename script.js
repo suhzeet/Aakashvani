@@ -22,28 +22,21 @@ async function showData(location) {
   let data = await response.json();
   console.log(data);
 
-  // const weather = {
-  //   city: data.name,
-  //   country: data.sys.country,
-
-  //   temperature: data.main.temp,
-  //   feelsLike: data.main.feels_like,
-  //   humidity: data.main.humidity,
-
-  //   description: data.weather[0].description,
-  // };
-
   let city = document.createElement("p");
   city.classList = "city";
-  city.textContent = `${data.name}, `;
+  city.innerHTML = `<ion-icon name="location-sharp"></ion-icon><span> ${data.name}, ${data.sys.country}</span>`;
 
-  let country = document.createElement("p");
-  country.classList = "country";
-  country.textContent = data.sys.country;
+  let time = document.createElement("p");
+  time.classList = "time";
+  time.textContent = new Date().toLocaleTimeString([], {
+    hour: "numeric",
+    minute: "2-digit",
+    hour12: true,
+  });
 
   let temperature = document.createElement("p");
   temperature.classList = "temperature";
-  temperature.innerHTML = `${data.main.temp}<span>&#176C</span>`;
+  temperature.innerHTML = `${data.main.temp}<span>&#176</span>`;
 
   let description = document.createElement("p");
   description.classList = "description";
@@ -51,26 +44,26 @@ async function showData(location) {
 
   let feelsLike = document.createElement("p");
   feelsLike.classList = "feels-like";
-  feelsLike.innerHTML = `Feels like: ${data.main.feels_like}<span>&#176C</span>`;
+  feelsLike.innerHTML = `Feels like ${data.main.feels_like}<span>&#176</span>`;
 
   // buttom grid
   let humidity = document.createElement("p");
   humidity.classList = "humidity";
-  humidity.innerHTML = `<div><p>Humidity</p><span>${data.main.humidity}%</span></div>`;
+  humidity.innerHTML = `<div><p><ion-icon name="water"></ion-icon>Humidity</p><span>${data.main.humidity}%</span></div>`;
 
   let windSpeed = document.createElement("p");
   windSpeed.classList = "wind-speed";
-  windSpeed.innerHTML = `<div><p>Wind Speed</p><span>${data.wind.speed} km/h</span></div>`;
+  windSpeed.innerHTML = `<div><p><ion-icon name="options"></ion-icon>Wind</p><span>${data.wind.speed} km/h</span></div>`;
 
   let sunrise = document.createElement("p");
   sunrise.classList = "sunrise";
-  sunrise.innerHTML = `<div><p>Sunrise</p><span>${formatTime(
+  sunrise.innerHTML = `<div><p><ion-icon name="partly-sunny"></ion-icon>Sunrise</p><span>${formatTime(
     data.sys.sunrise
   )}</span></div>`;
 
   let sunset = document.createElement("p");
   sunset.classList = "sunset";
-  sunset.innerHTML = `<div><p>Sunset</p><span>${formatTime(
+  sunset.innerHTML = `<div><p><ion-icon name="partly-sunny"></ion-icon>Sunset</p><span>${formatTime(
     data.sys.sunset
   )}</span></div>`;
 
@@ -105,7 +98,7 @@ async function showData(location) {
   details.classList.remove("hidden");
   // details.appendChild(image);
   details.appendChild(city);
-  details.appendChild(country);
+  details.appendChild(time);
   details.appendChild(description);
   details.appendChild(div);
   details.appendChild(temperature);
